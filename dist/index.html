@@ -162,13 +162,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
     <div class="fg"><label>Preset</label>
       <select id="fp" onchange="applyPreset()">
         <option value="">— Custom —</option>
-        <option value="Errors|^E \\(|1">🔴 Errors</option>
-        <option value="Warnings|^W \\(|1">🟡 Warnings</option>
-        <option value="Console|^[a-zA-Z_]+>|1">🟢 Console Prompt</option>
-        <option value="mbedTLS|mbedtls|0">🔐 mbedTLS</option>
-        <option value="WiFi|wifi|0">📶 WiFi</option>
-        <option value="Heap|heap|0">🧠 Heap/Memory</option>
+        <option value="ConsolePrompt::^(?![I|E]).*$">🟢 Console Prompt</option>
+        <option value="Errors::^E \\(|1">🔴 Errors</option>
+        <option value="Warnings::^W \\(|1">🟡 Warnings</option>
+        <option value="mbedTLS::mbedtls|0">🔐 mbedTLS</option>
+        <option value="WiFi::wifi|0">📶 WiFi</option>
+        <option value="Heap::heap|0">🧠 Heap/Memory</option>
       </select>
+
     </div>
     <div class="fg"><label>Panel Name</label><input type="text" id="fn" placeholder="e.g. TLS Handshake"></div>
     <div class="fg"><label>Match Pattern</label><input type="text" id="fpt" placeholder="e.g. mbedtls or ^E \\("></div>
@@ -536,7 +537,7 @@ function showFilterModal() {
 function closeFilterModal() { document.getElementById('filter-modal').classList.remove('show'); }
 function applyPreset() {
   const v=document.getElementById('fp').value; if(!v)return;
-  const[n,p,r]=v.split('|');
+  const[n,p,r]=v.split('::');
   document.getElementById('fn').value=n; document.getElementById('fpt').value=p; document.getElementById('fr').checked=r==='1';
 }
 function addFilter() {
