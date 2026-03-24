@@ -16,7 +16,17 @@
 }
 html,body{height:100%;overflow:hidden}
 body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;flex-direction:column;font-size:13px}
-#toolbar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--bg2);border-bottom:1px solid var(--border);flex-wrap:wrap;z-index:10}
+
+/* ADDED: Flexbox layout for the main app wrapper */
+#app {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+#toolbar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--bg2);border-bottom:1px solid var(--border);flex-wrap:wrap;z-index:10;flex-shrink:0}
 .tg{display:flex;align-items:center;gap:5px}
 .ts{width:1px;height:24px;background:var(--border);margin:0 6px}
 #toolbar button{padding:5px 14px;border:1px solid var(--border);border-radius:var(--rs);background:var(--bg4);color:var(--fg);cursor:pointer;font-family:var(--font);font-size:12px;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap}
@@ -128,6 +138,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
     </div>
   </div>
 
+  <div id="panels-container">
+    <div class="panel" data-id="main" style="flex:1 1 0px">
+      <div class="panel-header">
+        <div class="panel-title"><span class="icon">📋</span> All Logs <span class="badge" id="badge-main">0</span></div>
+        <div class="panel-actions">
+          <button onclick="clearPanel('main')" title="Clear">🗑</button>
+          <button class="active" id="as-main" onclick="toggleAS('main')" title="Auto-scroll">⬇️</button>
+        </div>
+      </div>
+      <div class="panel-body" id="log-main"></div>
+    </div>
+  </div>
+
   <div id="command-bar">
     <span id="cmd-prompt">&gt;</span>
     <div id="cmd-wrap">
@@ -142,19 +165,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
     <span id="hist-info"></span>
   </div>
 </div>
-  <div id="panels-container">
-    <div class="panel" data-id="main" style="flex:1 1 0px">
-      <div class="panel-header">
-        <div class="panel-title"><span class="icon">📋</span> All Logs <span class="badge" id="badge-main">0</span></div>
-        <div class="panel-actions">
-          <button onclick="clearPanel('main')" title="Clear">🗑</button>
-          <button class="active" id="as-main" onclick="toggleAS('main')" title="Auto-scroll">⬇️</button>
-        </div>
-      </div>
-      <div class="panel-body" id="log-main"></div>
-    </div>
-  </div>
-
 
 <div id="filter-modal" class="modal-overlay" onclick="if(event.target===this)closeFilterModal()">
   <div class="modal">
